@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,14 +27,19 @@ public class ForeignCurrencyController {
 	@Autowired
 	private ICurrencyService currencyService;
 	
+	 @Autowired
+	 private Environment environment;
+	    
+	
 	Calendar cal = Calendar.getInstance();
 	Date todayDate = cal.getTime();
 	SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 	String requiredDate = sdf.format(todayDate);
+	String restConsumeURL = environment.getProperty("rest.api.consume");
 	
 	@GetMapping("/LastSixMonths")
 	public ModelAndView getSixMonthsCurrencyInfo(Model model) {
-		ResponseObject lastSixMonthsCurrencyRate = currencyService.getLastSixMonthsCurrencyRate();
+		ResponseObject lastSixMonthsCurrencyRate = currencyService.getLastSixMonthsCurrencyRate(restConsumeURL);
 			ArrayList aList =new ArrayList();
 			aList.add(lastSixMonthsCurrencyRate);
             model.addAttribute("currencyObj",aList);
@@ -42,7 +48,7 @@ public class ForeignCurrencyController {
 	
 	@GetMapping("/")
 	public ModelAndView getThisMonthsCurrencyInfo(Model model) {
-		ResponseEntity<CurrencyModel> oneMonthCurrencyInfo = currencyService.getOneMonthCurrencyInfo(requiredDate);
+		ResponseEntity<CurrencyModel> oneMonthCurrencyInfo = currencyService.getOneMonthCurrencyInfo(restConsumeURL,requiredDate);
 		ArrayList aList =new ArrayList();
 		aList.add(oneMonthCurrencyInfo.getBody());
         model.addAttribute("currencyObj",aList);
