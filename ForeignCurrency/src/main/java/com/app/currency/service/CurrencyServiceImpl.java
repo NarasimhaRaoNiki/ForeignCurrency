@@ -33,7 +33,7 @@ public class CurrencyServiceImpl implements ICurrencyService{
 	ResponseObject response = new ResponseObject();
 	
 	@Override
-	public ResponseObject getLastSixMonthsCurrencyRate() {
+	public ResponseObject getLastSixMonthsCurrencyRate(String consumeUrl) {
 		
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -45,7 +45,7 @@ public class CurrencyServiceImpl implements ICurrencyService{
 			Date todayDate = cal.getTime();
 			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
 			String LastSixMothsDate = sdf.format(todayDate);
-			ResponseEntity<CurrencyModel> e = restTemplate.exchange("https://api.ratesapi.io/api/" + LastSixMothsDate,
+			ResponseEntity<CurrencyModel> e = restTemplate.exchange(consumeUrl + LastSixMothsDate,
 					HttpMethod.GET, entity, CurrencyModel.class);
 
 			uk.add(e.getBody().getRates().getGBP());
@@ -64,13 +64,13 @@ public class CurrencyServiceImpl implements ICurrencyService{
 	
 	
    @Override
-	public ResponseEntity<CurrencyModel> getOneMonthCurrencyInfo(String requiredDate)  {
+	public ResponseEntity<CurrencyModel> getOneMonthCurrencyInfo(String consumeUrl,String requiredDate)  {
 		
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
 	    HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-		ResponseEntity<CurrencyModel> e = restTemplate.exchange("https://api.ratesapi.io/api/" + requiredDate, HttpMethod.GET,entity,CurrencyModel.class);
+		ResponseEntity<CurrencyModel> e = restTemplate.exchange(consumeUrl + requiredDate, HttpMethod.GET,entity,CurrencyModel.class);
 		return e;
 	}
 	  

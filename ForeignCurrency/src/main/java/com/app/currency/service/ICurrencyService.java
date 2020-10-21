@@ -9,8 +9,8 @@ import com.app.currency.pojo.ResponseObject;
 public interface ICurrencyService {
 	
 
-	public ResponseObject getLastSixMonthsCurrencyRate();
+	public ResponseObject getLastSixMonthsCurrencyRate(String consumeUrl);
 
-	public ResponseEntity<CurrencyModel>  getOneMonthCurrencyInfo(String requiredDate);
+	public ResponseEntity<CurrencyModel>  getOneMonthCurrencyInfo(String consumeUrl,String requiredDate);
 
 }
