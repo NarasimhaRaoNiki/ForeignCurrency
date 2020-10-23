@@ -37,6 +37,7 @@ public class ForeignCurrencyController {
 	String requiredDate = sdf.format(todayDate);
 	String restConsumeURL = environment.getProperty("rest.api.consume");
 	
+	/* This method is displaying the last six month currency information from today's date*/
 	@GetMapping("/LastSixMonths")
 	public ModelAndView getSixMonthsCurrencyInfo(Model model) {
 		ResponseObject lastSixMonthsCurrencyRate = currencyService.getLastSixMonthsCurrencyRate(restConsumeURL);
@@ -46,8 +47,9 @@ public class ForeignCurrencyController {
         return new ModelAndView("pastSixMonthsCurrency");
     }
 	
+	/* This method is displaying the pressent month currency information */
 	@GetMapping("/")
-	public ModelAndView getThisMonthsCurrencyInfo(Model model) {
+	public ModelAndView getPresentMonthsCurrencyInfo(Model model) {
 		ResponseEntity<CurrencyModel> oneMonthCurrencyInfo = currencyService.getOneMonthCurrencyInfo(restConsumeURL,requiredDate);
 		ArrayList aList =new ArrayList();
 		aList.add(oneMonthCurrencyInfo.getBody());
