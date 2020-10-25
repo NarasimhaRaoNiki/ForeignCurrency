@@ -1,8 +1,3 @@
-/* 
- * Author ::. Sivateja Kandula | www.java4s.com 
- *
- */
-
 package com.app;
 
 import org.springframework.boot.SpringApplication;

@@ -33,7 +33,7 @@
     <div>
     <center>
     
-    <form action="LastSixMonths" method="get">
+    <form action="last-sixmonths-info" method="get">
     <input type="submit" name="button1" value="Check LastSixMonths Currency Info" />
 </form>
     </center>
